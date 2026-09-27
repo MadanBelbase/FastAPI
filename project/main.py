@@ -18,7 +18,42 @@ def save_data(data):
 
 
 class Patient(Basemodel):
-    name: Annoate
+    id : Annoateted[str, Field(..., description= "ID of the patient", example =["P001"])]
+    name: Annotated[str,Field(...,description="Name of the patient")]
+    city: Annoatated[str, Field(...,description="city where patient lives")]
+    age : Annoatated [int,Field(gt=0, description="Age of the patient ")]
+    gender : Annoatated[literal['male','female','others'] ,Field(...,description = "Gender of the patient" )]
+    height : Annoatated[float,Field(...,gt=0, description="Height of the patient in meters")]
+    weight: Annoatated[float,Field(...,gt=0, description="Weight of the patient in kilograms")]
+
+    @computed_field
+    @property 
+    def bmi(self) -> float:
+        bmi = round(self.weight/(self.height ** 2), 2)
+        return bmi 
+
+    @computed_field
+    @property 
+    def verdict(self)-> str:
+        if self.bmi < 18.5:
+            return "Underweight"
+        elif self.bmi < 24.9:
+            return "Normal weight"
+        elif self.bmi < 29.9:
+            return "Overweight"
+        else:
+            return "Obese"
+
+class Patientupdatea(BaseModel):
+    name: Annoatated(Optional[str,Field(default=None)])
+    city :Annoatated(Optional[str,Field(default=None)])
+    Age: Annoatated(Optional[int,Field(default=None,gt=0)])
+    gender: Annoatated(optional[literal['male','female','others'],Field(default=None)])
+    height: Annoatated(Optional[float,Field(default=None,gt=0)])
+    weight: Annoatated(Optional[float,Field(default=None,gt=0)])
+
+    
+
 
 
 @app.get("/")
@@ -82,3 +117,11 @@ def view_patient(patient_id: str = Path(..., description="The ID of the patient 
         return  data[patient_id]
     else:
         raise HTTPException(status_code=404, detail="Patient not found")
+
+@app.post("/add")
+def add_patient(patient:Patient):
+    data = load_data()
+    if patient_id  in data:
+        raise HTTPException(status_code=400, detail="Patient with this ID already exists")
+    
+    data[]
