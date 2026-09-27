@@ -1,4 +1,7 @@
 from fastapi  import  FastAPI , Path , HTTPException , Query
+import fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field ,computred_field
+from typing import List, Dict, Annotated, Optional 
 import json
 
 app =  FastAPI()
@@ -8,6 +11,14 @@ def load_data():
         data = json.load(file)
 
     return data
+
+def save_data(data):
+    with open("patiens.json","w") as file:
+        json.dump(data,file)
+
+
+class Patient(Basemodel):
+    name: Annoate
 
 
 @app.get("/")
