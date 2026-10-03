@@ -5,8 +5,6 @@ import pandas as pd
 with open ('model/model.pkl','rb') as file:
     model = pickle.load(file)
 
-
-#Ml flow
 MODEL_VERSION =' 1.0.0'
 
 #get class labels from model (important for multi-class classification)
