@@ -1,29 +1,39 @@
-import pickle 
+import pickle
 import pandas as pd
 
-# import the model 
-with open ('model/model.pkl','rb') as file:
+# Import the model
+with open("model/model.pkl", "rb") as file:
     model = pickle.load(file)
 
-MODEL_VERSION =' 1.0.0'
+MODEL_VERSION = "1.0.0"
 
-#get class labels from model (important for multi-class classification)
-class_labels =  model.classes_.tolist()
+# Get class labels from model (important for multi-class classification)
+class_labels = model.classes_.tolist()
 
-def predict_output(uesr_input: dict):
-    df = pd.DataFrame([uesr_input])
 
-    #predict the class
+def predict_output(user_input: dict):
+
+    df = pd.DataFrame([user_input])
+
+    # Predict the class
     predicted_class = model.predict(df)[0]
 
-    probabilities =model.predict(df)[0]
-    confidance = max(probabilities)
+    # Get probabilities for each class
+    probabilities = model.predict_proba(df)[0]
 
-    class_probs = dict(zip(class_labels, map(lambada p:  round(p, 4), probabilities)))
+    # Get confidence of the predicted class
+    confidence = max(probabilities)
+
+    # Map class labels to their probabilities
+    class_probs = dict(
+        zip(
+            class_labels,
+            map(lambda p: round(p, 4), probabilities)
+        )
+    )
 
     return {
-        "predicte_catogery ": predicted_class,
-        "confidance": confidance,
+        "predicted_category": predicted_class,
+        "confidence": confidence,
         "class_probabilities": class_probs,
     }
-
