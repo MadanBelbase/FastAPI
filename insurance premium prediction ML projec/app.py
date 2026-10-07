@@ -27,7 +27,7 @@ def health_check():
 def predict_premium(data: UserInput):
 
     user_input  = {  
-            "age": data.age,
+           'bmi': data.bmi,
            'age_group': data.age_group,
            'lifestyle_risk': data.lifestyle_risk,
            'city_tier': data.city_tier,

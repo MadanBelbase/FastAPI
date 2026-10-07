@@ -1,1 +1,93 @@
-fastapi
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+fastapi/
+
+# =========================
+# Environment variables
+# =========================
+
+.env
+.env.*
+!.env.example
+
+# =========================
+# Jupyter Notebook
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+# IDE / Editor
+# =========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# macOS
+# =========================
+
+.DS_Store
+
+# =========================
+# Logs
+# =========================
+
+*.log
+
+# =========================
+# Testing / Coverage
+# =========================
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Build / Distribution
+# =========================
+
+build/
+dist/
+*.egg-info/
+
+# =========================
+# ML / Data
+# =========================
+
+*.csv
+*.xlsx
+*.xls
+*.parquet
+
+# Generated datasets
+data/
+datasets/
+
+# =========================
+# Model artifacts
+# =========================
+
+# Ignore trained models
+*.pkl
+*.joblib
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.bak

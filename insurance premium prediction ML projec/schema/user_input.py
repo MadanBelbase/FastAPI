@@ -18,7 +18,6 @@ class UserInput(BaseModel):
     weight: Annotated[
         float,
         Field(
-            ...,
             gt=0,
             description="Weight of the user in kilograms",
             example=70.5
@@ -28,16 +27,15 @@ class UserInput(BaseModel):
     height: Annotated[
         float,
         Field(
-            ...,
             gt=0,
-            description="Height of the user"
+            description="Height of the user",
+            example=1.75
         )
     ]
 
     income_lpa: Annotated[
         float,
         Field(
-            ...,
             gt=0,
             description="Income of the user in LPA",
             example=5.5
@@ -47,7 +45,6 @@ class UserInput(BaseModel):
     smoker: Annotated[
         Literal["yes", "no"],
         Field(
-            ...,
             description="Whether the user is a smoker or not",
             example="no"
         )
@@ -56,7 +53,6 @@ class UserInput(BaseModel):
     city: Annotated[
         str,
         Field(
-            ...,
             description="City where the user lives",
             example="Kathmandu"
         )
@@ -64,16 +60,16 @@ class UserInput(BaseModel):
 
     occupation: Annotated[
         Literal[
-            "salaried",
-            "self-employed",
-            "business",
+            "retired",
+            "freelancer",
             "student",
-            "retired"
+            "government_job",
+            "business_owner",
+            "unemployed",
+            "private_job"
         ],
         Field(
-            ...,
-            description="Occupation of the user",
-            example="salaried"
+            description="Occupation of the user"
         )
     ]
 
@@ -94,10 +90,8 @@ class UserInput(BaseModel):
     def lifestyle_risk(self) -> str:
         if self.smoker == "yes" and self.bmi > 30:
             return "high"
-
         elif self.smoker == "yes" or self.bmi > 27:
             return "medium"
-
         else:
             return "low"
 
@@ -106,13 +100,10 @@ class UserInput(BaseModel):
     def age_group(self) -> str:
         if self.age < 25:
             return "young"
-
         elif self.age < 45:
             return "adult"
-
         elif self.age < 60:
             return "middle_aged"
-
         return "senior"
 
     @computed_field
@@ -120,9 +111,7 @@ class UserInput(BaseModel):
     def city_tier(self) -> int:
         if self.city in tier_1_cities:
             return 1
-
         elif self.city in tier_2_cities:
             return 2
-
         else:
             return 3
